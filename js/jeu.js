@@ -286,13 +286,13 @@
     },
     
     update: function(dt) {
-      // update time passed between shots
+      // temps de mise à jour écoulé entre les prise de vu
       this.bulletDelayAccumulator += dt;
       
-      // apply x vel
+      // niveau X
       this.position.x += this.xVel * dt;
       
-      // cap player position in screen bounds
+      // capter la position des joueursdans les limites de l'ecran
       this.position.x = clamp(this.position.x, this.bounds.w/2, CANVAS_WIDTH - this.bounds.w/2);
       this.updateBullets(dt);
     },
@@ -300,7 +300,7 @@
     draw: function(resized) {
       this._super(resized);
   
-      // draw bullets
+      // dessine des balles
       for (var i = 0, len = this.bullets.length; i < len; i++) {
         var bullet = this.bullets[i];
         if (bullet.alive) {
@@ -419,7 +419,7 @@
               }
       }
     },
-    
+    //création explosion
     createExplosion: function(x, y, color, number, width, height, spd, grav, lif) {
     for (var i =0;i < number;i++) {
               var angle = Math.floor(Math.random()*360);
@@ -459,26 +459,26 @@
   //
   // ###################################################################
   function initCanvas() {
-    // create our canvas and context
+    // création canevas et context
     canvas = document.getElementById('game-canvas');
     ctx = canvas.getContext('2d');
     
-    // turn off image smoothing
+    // désactiviver le lissage de l'image
     setImageSmoothing(false);
     
-    // create our main sprite sheet img
+    //création image de feuille de sptite principale
     spriteSheetImg = new Image();
     spriteSheetImg.src = SPRITE_SHEET_SRC;  
     preDrawImages();
   
-    // add event listeners and initially resize
+    // ajout des écouteurs d'événements et initialement
     window.addEventListener('resize', resize);
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('keyup', onKeyUp);
   }
   //BALL a TIRE
   function preDrawImages() {
-    var canvas = drawIntoCanvas(2, 8, function(ctx) {
+    var canvas = drawIntoCanvas(8, 32, function(ctx) {
         ctx.fillStyle = 'red';
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       });
@@ -537,7 +537,7 @@
   
   
   // ###################################################################
-  // Helpful input functions
+  // Fonction de saisie utile
   //
   // ###################################################################
   function isKeyDown(key) {
@@ -550,7 +550,7 @@
   
   
   // ###################################################################
-  // Drawing & Update functions
+  // Fonction de dessin et de mise à jour
   //
   // ###################################################################
   function updateAliens(dt) {
@@ -668,9 +668,9 @@
     ctx.drawImage(spriteSheetImg, player.clipRect.x, player.clipRect.y, player.clipRect.w, 
                    player.clipRect.h, 45, CANVAS_HEIGHT - 23, player.clipRect.w * 0.5,
                    player.clipRect.h * 0.5);
-    // fillText('CREDIT: ', CANVAS_WIDTH - 115, CANVAS_HEIGHT - 7.5);
+   
     fillCenteredText('SCORE: ' + player.score, CANVAS_WIDTH/2, 20);
-    // fillBlinkingText('00', CANVAS_WIDTH - 25, CANVAS_HEIGHT - 7.5, TEXT_BLINK_FREQ);
+    
   }
   
   function drawAliens(resized) {
@@ -720,14 +720,14 @@
   
   
   // ###################################################################
-  // Event Listener functions
+  // fonction d'écoute d'événement
   //
   // ###################################################################
   function resize() {
     var w = window.innerWidth;
     var h = window.innerHeight;
   
-      // calculate the scale factor to keep a correct aspect ratio
+      // calculer le facteur d'echelle pour garder un rapport hauteur/ largeur correct
     var scaleFactor = Math.min(w / CANVAS_WIDTH, h / CANVAS_HEIGHT);
     
     if (IS_CHROME) {
@@ -736,7 +736,7 @@
       setImageSmoothing(false);
       ctx.transform(scaleFactor, 0, 0, scaleFactor, 0, 0);   
     } else {
-      // resize the canvas css properties
+      // Redimensionner les propriétés CSS du Canevas
       canvas.style.width = CANVAS_WIDTH * scaleFactor + 'px';
       canvas.style.height = CANVAS_HEIGHT * scaleFactor + 'px'; 
     }
